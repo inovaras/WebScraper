@@ -1,13 +1,14 @@
-import requests
 import json
-from bs4 import BeautifulSoup as bs
 import time
+
+import requests
+from bs4 import BeautifulSoup as bs
 
 
 def get_main_page():
     url = 'https://habr.com/ru/'
     response = requests.get(url)
-    with open("main.txt", "w", encoding="utf-8") as file:
+    with open("info/main.txt", "w", encoding="utf-8") as file:
         file.write(response.text)
     return response.text
 
@@ -15,12 +16,12 @@ def get_main_page():
 def parse_main_page(html):
     soup = bs(html, 'html.parser')
     hub_links = soup.find_all('a', class_="tm-title__link")
-    with open("main_info.txt", "w", encoding="utf-8") as file:
+    with open("info/main_info.txt", "w", encoding="utf-8") as file:
         for link in hub_links:
             file.write(f"hub_link: {link}\n")
 
     article_links = ["https://habr.com"+link['href'] for link in hub_links]
-    with open("article_links.txt", "a", encoding="utf-8") as file:
+    with open("info/article_links.txt", "a", encoding="utf-8") as file:
         for link in article_links:
             file.write(f"hub_link: {link}\n")
     return article_links
@@ -28,7 +29,7 @@ def parse_main_page(html):
 
 def parse_article_page(article_url):
     response = requests.get(article_url)
-    with open("article.txt", "w", encoding="utf-8") as file:
+    with open("info/article.txt", "w", encoding="utf-8") as file:
         file.write(response.text)
     print(response.status_code)
     soup = bs(response.text, 'html.parser')
