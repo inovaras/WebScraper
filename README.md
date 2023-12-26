@@ -62,6 +62,15 @@ python manage.py migrate
 python manage.py runserver
 ```
 Админка http://127.0.0.1:8000/admin/parser/article/
+(для админки:
+Создать суперпользователя
+```
+python manage.py createsuperuser
+```
+если использовать готовую БД, то есть пользователь:
+username: admin
+password: 1 
+
 
 
 ## Заполнение базы данных:
