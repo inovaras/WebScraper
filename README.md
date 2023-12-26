@@ -65,7 +65,8 @@ python manage.py runserver
 
 
 ## Заполнение базы данных:
-Скрипт парсера https://habr.com/ru и загрузки данных в бд находится в ```parser > commands > async_parse_hub_and_fill_bd``` 
+Скрипт парсера https://habr.com/ru и загрузки данных в бд находится в 
+```web_scraper > parser > management > commands > async_parse_hub_and_fill_bd``` 
 
 ## Запуск скрипта по команде:
 ```
