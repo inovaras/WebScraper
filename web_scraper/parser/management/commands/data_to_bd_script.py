@@ -30,20 +30,26 @@ class Command(BaseCommand):
         if response.status_code != 200:
             print(response.status_code)
         soup = bs(response.text, 'html.parser')
+
         script_content = soup.find('script', {'data-vue-meta': 'ssr', 'type': 'application/ld+json'}).string
         author_content = soup.find('a', class_='tm-user-info__username')
         data = json.loads(script_content)
         title = data.get('headline', '')
         date = data.get('datePublished', '')
         author_name = data.get('author', '').get('name')
-        author_url = 'https://habr.com' + author_content['href']
+        if author_content:
+            author_url = 'https://habr.com' + author_content.get('href')
+        else:
+            author_url = 'empty'
+        text = soup.find('div', class_='article-formatted-body article-formatted-body article-formatted-body_version-2').text
 
         return {
             'title': title,
             'date': date,
             'article_url': article_url,
             'author_name': author_name,
-            'author_url': author_url
+            'author_url': author_url,
+            'text': text
         }
 
     @staticmethod
@@ -56,8 +62,6 @@ class Command(BaseCommand):
         print(f"Author URL: {info['author_url']}")
         print("-" * 50)
 
-
-
     def parse(self):
         main_page_html = Command.get_main_page()
         article_links = Command.parse_main_page(main_page_html)
@@ -69,13 +73,14 @@ class Command(BaseCommand):
             articles_info['article_url'] = info['article_url']
             articles_info['author_name'] = info['author_name']
             articles_info['author_url'] = info['author_url']
+            articles_info['text'] = info['text']
             self.articles.append(articles_info)
 
     def handle(self, *args, **options):
         while True:
             print("Получаю данные с Хабра...")
             self.parse()
-
+            Article.objects.all().delete()
             print('Переношу данные в БД')
 
             for article_data in self.articles:
@@ -84,7 +89,8 @@ class Command(BaseCommand):
                     date=article_data['date'],
                     article_url=article_data['article_url'],
                     author_name=article_data['author_name'],
-                    author_url=article_data['author_url']
+                    author_url=article_data['author_url'],
+                    text=article_data['text']
                 )
             print("Жду 10 минут...")
             time.sleep(600)

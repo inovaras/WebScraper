@@ -7,3 +7,4 @@ class Article(models.Model):
     article_url = models.CharField(max_length=200)
     author_name = models.CharField(max_length=200)
     author_url = models.CharField(max_length=200)
+    text = models.TextField(blank=True)
