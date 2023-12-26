@@ -41,7 +41,11 @@ class Command(BaseCommand):
             author_url = 'https://habr.com' + author_content.get('href')
         else:
             author_url = 'empty'
-        text = soup.find('div', class_='article-formatted-body article-formatted-body article-formatted-body_version-2').text
+        post = soup.find('div', class_='article-formatted-body article-formatted-body article-formatted-body_version-2')
+        if post:
+            text = post.text
+        else:
+            text = 'empty'
 
         return {
             'title': title,
@@ -80,17 +84,21 @@ class Command(BaseCommand):
         while True:
             print("Получаю данные с Хабра...")
             self.parse()
-            Article.objects.all().delete()
-            print('Переношу данные в БД')
+            print('Обновляю данные в БД')
 
             for article_data in self.articles:
-                Article.objects.create(
-                    title=article_data['title'],
-                    date=article_data['date'],
-                    article_url=article_data['article_url'],
-                    author_name=article_data['author_name'],
-                    author_url=article_data['author_url'],
-                    text=article_data['text']
-                )
+                if article_data:
+                    existing_article = Article.objects.filter(article_url=article_data['article_url']).first()
+
+                    if not existing_article:
+                        Article.objects.create(
+                            title=article_data['title'],
+                            date=article_data['date'],
+                            article_url=article_data['article_url'],
+                            author_name=article_data['author_name'],
+                            author_url=article_data['author_url'],
+                            text=article_data['text']
+                        )
+
             print("Жду 10 минут...")
             time.sleep(600)
