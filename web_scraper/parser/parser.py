@@ -5,6 +5,9 @@ import requests
 from bs4 import BeautifulSoup as bs
 
 
+articles = []
+
+
 def get_main_page():
     url = 'https://habr.com/ru/'
     response = requests.get(url)
@@ -55,11 +58,10 @@ def main():
         print("Получаю данные с Хабра...")
         main_page_html = get_main_page()
         article_links = parse_main_page(main_page_html)
-        articles = []
 
         for article_link in article_links:
             info = parse_article_page(article_link)
-            # print_article_info(info)
+            print_article_info(info)
             articles_info = dict()
             articles_info['title'] = info['title']
             articles_info['date'] = info['date']
