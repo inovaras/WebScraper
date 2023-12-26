@@ -72,3 +72,5 @@ python manage.py runserver
 ```
 python manage.py async_parse_hub_and_fill_bd
 ```
+
+### Собранную БД можно посмотреть ```web_scraper > parser > db.sqlite3``` таблица ```parser_article```
