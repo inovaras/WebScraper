@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 from django.core.management.base import BaseCommand
 
-from web_scraper.parser.models import Article
+from ...models import Article
 
 
 class Command(BaseCommand):
@@ -56,11 +56,7 @@ class Command(BaseCommand):
         print(f"Author URL: {info['author_url']}")
         print("-" * 50)
 
-    @staticmethod
-    def make_articles_info_file(articles):
-        with open('../../info/articles_info.txt', 'w', encoding='utf-8') as file:
-            for article in articles:
-                file.write(str(article) + '\n')
+
 
     def parse(self):
         main_page_html = Command.get_main_page()
@@ -75,16 +71,20 @@ class Command(BaseCommand):
             articles_info['author_url'] = info['author_url']
             self.articles.append(articles_info)
 
-
     def handle(self, *args, **options):
         while True:
             print("Получаю данные с Хабра...")
             self.parse()
-            Command.make_articles_info_file(self.articles)
+
             print('Переношу данные в БД')
 
-            for article in self.articles:
-                obj = Article(*article)
-                obj.save()
+            for article_data in self.articles:
+                Article.objects.create(
+                    title=article_data['title'],
+                    date=article_data['date'],
+                    article_url=article_data['article_url'],
+                    author_name=article_data['author_name'],
+                    author_url=article_data['author_url']
+                )
             print("Жду 10 минут...")
             time.sleep(600)
