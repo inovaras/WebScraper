@@ -47,6 +47,7 @@ python -m pip install --upgrade pip
 Установить зависимости из файла requirements.txt:
 
 ```
+cd web_scraper
 pip install -r requirements.txt
 ```
 

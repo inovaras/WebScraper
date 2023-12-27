@@ -8,7 +8,7 @@ from ...models import Article
 
 
 class Command(BaseCommand):
-    help = 'Transserfing data to database'
+    help = 'Передача данных в базу данных'
     articles = []
 
     @staticmethod
