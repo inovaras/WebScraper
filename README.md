@@ -33,15 +33,18 @@ cd WebScraper
 Cоздать и активировать виртуальное окружение:
 
 ```
-python -m venv venv
+python -m venv venv 
+(Для Linux: python3 -m venv venv)
 ```
 
 ```
-source venv/Scripts/activate
+source venv/Scripts/activate  
+(Для Linux: source venv/bin/activate)
 ```
 
 ```
-python -m pip install --upgrade pip
+python -m pip install --upgrade pip 
+(Для Linux: python3 -m pip install --upgrade pip)
 ```
 
 Установить зависимости из файла requirements.txt:
@@ -56,12 +59,23 @@ pip install -r requirements.txt
 ```
 python manage.py makemigrations
 python manage.py migrate
+
+(Для Linux: 
+python3 manage.py makemigrations
+python3 manage.py migrate
+)
 ```
 
-Запустить проект:
 
+Проект запускается в 2 этапа:
+1) Запуск Админки
+2) Запуск скрипта парсера https://habr.com/ru и загрузки данных в бд находится в 
+
+## Этап 1:
 ```
 python manage.py runserver
+(Для Linux: python3 manage.py runserver)
+
 ```
 Админка http://127.0.0.1:8000/admin/parser/article/
 
@@ -70,14 +84,14 @@ python manage.py runserver
 Создать суперпользователя
 ```
 python manage.py createsuperuser
+(Для Linux: python3 manage.py createsuperuser)
 ```
 если использовать готовую БД, то есть пользователь:
 ```
 username: admin
 password: 1 
 ```
-
-
+## Этап 2:
 
 ## Заполнение базы данных:
 Скрипт парсера https://habr.com/ru и загрузки данных в бд находится в 
@@ -86,6 +100,7 @@ password: 1
 ## Запуск скрипта по команде:
 ```
 python manage.py async_parse_hub_and_fill_bd
+(Для Linux: python3 manage.py async_parse_hub_and_fill_bd)
 ```
 
 ### Собранную БД можно посмотреть ```web_scraper > parser > db.sqlite3``` таблица ```parser_article```
