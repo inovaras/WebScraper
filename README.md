@@ -22,7 +22,7 @@ LVL4: Добавлена админка на Django для отображени�
 Клонировать репозиторий:
 
 ```
-git clone git@github.com:inovaras/WebScraper.git
+git clone https://github.com/inovaras/WebScraper.git
 ```
 
 Перейти в него в командной строке:
@@ -33,7 +33,7 @@ cd WebScraper
 Cоздать и активировать виртуальное окружение:
 
 ```
-python -m venv env
+python -m venv venv
 ```
 
 ```
@@ -54,6 +54,7 @@ pip install -r requirements.txt
 Выполнить миграции:
 
 ```
+python manage.py makemigrations
 python manage.py migrate
 ```
 
