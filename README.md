@@ -17,7 +17,7 @@ LVL3: Парсер асинхронный, используется библио
 
 LVL4: Добавлена админка на Django для отображения хабов и управления ими (можно добавить хаб/удалить хаб).
 
-(LVL5: Упаковать всё Docker-образ. - на данный момент в разработке :)
+LVL5: Упаковать всё Docker-образ. 
 
 ## Как запустить проект:
 
@@ -32,84 +32,20 @@ git clone https://github.com/inovaras/WebScraper.git
 cd WebScraper
 ```
 
-Cоздать и активировать виртуальное окружение:
+Выполнить команду:
 
 ```
-python -m venv venv 
-(Для Linux: python3 -m venv venv)
-```
+docker compose up
 
 ```
-source venv/Scripts/activate  
-(Для Linux: source venv/bin/activate)
-```
 
-```
-python -m pip install --upgrade pip 
-(Для Linux: python3 -m pip install --upgrade pip)
-```
-
-Установить зависимости из файла requirements.txt:
-
-```
-cd web_scraper
-pip install -r requirements.txt
-```
-
-Выполнить миграции:
-
-```
-python manage.py makemigrations
-python manage.py migrate
-
-(Для Linux: 
-python3 manage.py makemigrations
-python3 manage.py migrate
-)
-```
-
-Проект запускается в 2 этапа:
-1) Запуск Админки
-2) Запуск скрипта парсера https://habr.com/ru и загрузки данных в бд находится в 
-
-## Этап 1:
-```
-python manage.py runserver
-(Для Linux: python3 manage.py runserver)
-
+Все готово!
+Можно зайти в админку смотреть необходимую информацию по статьям с habr.com
 ```
 Админка http://127.0.0.1:8000/admin/parser/article/
-
-Для админки:
-
-Создать суперпользователя
-```
-python manage.py createsuperuser
-(Для Linux: python3 manage.py createsuperuser)
-```
-если использовать готовую БД, то есть пользователь:
+Заходить под суперпользователем:
 ```
 username: admin
 password: 1 
 ```
-## Этап 2:
 
-## Запуск скрипта по команде:
-Параллельно в другом терминале перейти в директорию web_scraper:
-```
-cd web_scraper
-```
-Запустить скрипт для парсинги и заполнения БД по команде:
-```
-python manage.py async_parse_hub_and_fill_bd
-(Для Linux: python3 manage.py async_parse_hub_and_fill_bd)
-```
-
-## Дополнительные сведения:
-1) Скрипт парсера https://habr.com/ru и загрузки данных в бд находится в
-
-```web_scraper > parser > management > commands > async_parse_hub_and_fill_bd``` 
-
-2)  Собранную БД можно посмотреть ```web_scraper > parser > db.sqlite3```
-
-таблица c распарсенными данными наз-ся: ```parser_article```
