@@ -68,7 +68,6 @@ python3 manage.py migrate
 )
 ```
 
-
 Проект запускается в 2 этапа:
 1) Запуск Админки
 2) Запуск скрипта парсера https://habr.com/ru и загрузки данных в бд находится в 
@@ -111,4 +110,6 @@ python manage.py async_parse_hub_and_fill_bd
 
 ```web_scraper > parser > management > commands > async_parse_hub_and_fill_bd``` 
 
-2)  Собранную БД можно посмотреть ```web_scraper > parser > db.sqlite3``` таблица ```parser_article```
+2)  Собранную БД можно посмотреть ```web_scraper > parser > db.sqlite3```
+
+таблица c распарсенными данными наз-ся: ```parser_article```
