@@ -93,14 +93,20 @@ password: 1
 ```
 ## Этап 2:
 
-## Заполнение базы данных:
-Скрипт парсера https://habr.com/ru и загрузки данных в бд находится в 
-```web_scraper > parser > management > commands > async_parse_hub_and_fill_bd``` 
-
 ## Запуск скрипта по команде:
+Параллельно в другом терминале оперейти в директорию web_scraper:
+```
+cd web_scraper
+```
+Запустить скрипт для парсинги и заполнения БД по команде:
 ```
 python manage.py async_parse_hub_and_fill_bd
 (Для Linux: python3 manage.py async_parse_hub_and_fill_bd)
 ```
 
-### Собранную БД можно посмотреть ```web_scraper > parser > db.sqlite3``` таблица ```parser_article```
+## Дополнительные сведения:
+1) Скрипт парсера https://habr.com/ru и загрузки данных в бд находится в
+
+```web_scraper > parser > management > commands > async_parse_hub_and_fill_bd``` 
+
+2)  Собранную БД можно посмотреть ```web_scraper > parser > db.sqlite3``` таблица ```parser_article```
